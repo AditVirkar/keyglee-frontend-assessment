@@ -1,0 +1,47 @@
+name: frontend-assessment
+services:
+  todo:
+    build:
+      context: .
+      dockerfile: api/todo/Dockerfile.dev
+    volumes:
+      - .:/app
+      - .:/app/bin
+      - go-mod-cache:/go/pkg/mod
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - STAGE=local
+      - DB_HOST=postgres
+      - DB_USER=assessment_user
+      - DB_PASSWORD=assessment_password
+      - DB_NAME=assessment_db
+      - DB_POST=6789
+    networks:
+      - api-network
+    depends_on:
+      - postgres
+    working_dir: /app
+    command: air -c api/todo/air.toml
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=assessment_user
+      - POSTGRES_PASSWORD=assessment_password
+      - POSTGRES_DB=assessment_db
+    ports:
+      - "6789:6789"
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    name: api-network
+    driver: bridge
+
+volumes:
+  go-mod-cache:
+  # postgres-data:
+#   redis-data:
