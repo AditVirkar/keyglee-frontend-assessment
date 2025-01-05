@@ -179,21 +179,21 @@ npm i -D daisyui@latest
 
 # Running the project
 
-- Clone the git repository and navigate to the branch avirkar/todos and navigate to the backend directory.
-- Run
+- Clone the git repository and navigate to the backend directory.
+- Run the docker file using:
 
 ```sh
 docker compose up
 ```
 
-- Go to a new terminal and navigate to the frontend and run the frontend.
+- Go to a new terminal and navigate to the frontend and run the frontend using below commands:
 
 ```sh
 npm i
 ```
 
 ```sh
-npm start
+npm run dev
 ```
 
 # Explaining the project
