@@ -6,4 +6,5 @@ export interface ITask {
 
 export interface ICreateTask {
   display_name: string;
+  due_by: string;
 }

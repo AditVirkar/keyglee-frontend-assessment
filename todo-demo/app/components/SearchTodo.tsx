@@ -15,8 +15,16 @@ const SearchTodo: React.FC<TodoListProps> = ({ tasks }) => {
   const [searchId, setSearchId] = useState<string>("");
 
   const fetchTask = async (id: number) => {
-    const fetchedTask = await getTaskById(id);
-    setTask(fetchedTask);
+    try {
+      const fetchedTask = await getTaskById(id);
+      if (fetchedTask && fetchedTask.id) {
+        setTask(fetchedTask);
+      } else {
+        setTask(null);
+      }
+    } catch (error) {
+      setTask(null);
+    }
   };
 
   const handleSearch = async () => {
@@ -45,16 +53,14 @@ const SearchTodo: React.FC<TodoListProps> = ({ tasks }) => {
             {task ? (
               <div>
                 <p>
-                  <strong>ID:</strong> {task.id || "Task Not found"}
+                  <strong>ID:</strong> {task.id}
                 </p>
                 <p>
-                  <strong>Name:</strong> {task.display_name || "Task not found"}
+                  <strong>Name:</strong> {task.display_name}
                 </p>
                 <p>
                   <strong>Due By:</strong>{" "}
-                  {task.due_by
-                    ? new Date(task.due_by).toLocaleString()
-                    : "Task not found"}
+                  {new Date(task.due_by).toLocaleString()}
                 </p>
               </div>
             ) : (
